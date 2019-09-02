@@ -1,0 +1,19 @@
+# QUESTION 1
+
+# an assembly program to determine if a number is even or odd
+
+.data
+num: .word 5 #getting the user input
+
+.text
+li x5,2 #assigning 2 to register 5
+lw x6,num #loading word to the register
+rem x7,x6,x5 # getting the remainder of the division
+bne x7,x0,L1  # checking if the remainder is 0 or not
+add x28,x0,x0 #store 0 into the register if the remainder is 0
+beq x0,x0,exit #for stopping the execution when we return 0
+
+L1:
+addi,x28,x0,1 #store 1 into the register if the remainder is 1
+
+exit:
