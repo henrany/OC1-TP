@@ -1,0 +1,14 @@
+#QUESTION 2
+
+# an assembly program to check the factorial of a number
+
+.data
+num: .word 5
+
+.text
+li x5,1
+lw x6,num
+loop:
+mul x5,x5,x6
+addi x6,x6,-1
+blt x0,x6,loop
