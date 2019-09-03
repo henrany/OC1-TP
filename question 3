@@ -29,7 +29,7 @@ lw x28,0(x11)#first position of the array2
 lw x29,4(x11)#second position of array 2
 blt x29,x28,swap2
 addi x11,x11,4 #moving to the next position
-addi x30,x30,-1
+addi x30,x30,-1 #decrementing the counter
 bne x30,x0,second
 jal final
 
