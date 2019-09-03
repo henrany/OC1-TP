@@ -1,0 +1,27 @@
+# an assembly program to find if a two arrays are permutation of each other
+
+.data
+array1: .word 1 2 3 4
+array2: .word 2 3 1 4
+.text
+
+la x31,array1 #base address into register 31
+addi x31,x31,20
+
+outerloop1:
+add x9,x0,x0 #if the array is already sorted
+la x5,array1 #loading the base address into x5
+
+#putting elements into the first vector
+innerloop1:
+lw x6,0(x5) #first position of the array
+lw x7,4(x5) #second positon of the array
+blt x6,x7,resume #swap if x6 is less than x7
+addi x9,x0,1 #checking the list again
+sw x7,4(x5)
+sw x6,0(x5)
+
+resume:
+addi x5,x5,4
+bne x5,x31,innerloop1 #if the array is not sorted, go back to the innerloop
+bne x9,x0,outerloop1 # if x9 = 1, back to the outer loop
