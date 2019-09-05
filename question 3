@@ -1,53 +1,45 @@
 .data
-value1: .word 4 #number of elements to be stored inside the array
-value2: .word 4
-array1: .word 1 2 3 4 #the values to be stored entered by the user
-array2: .word 1 2 3 4 #the values for the second array
+value1: .word 4 #number of comparison to do (n-1) where n is the total number of elements in the array
+array1: .word 1 2 3 4 5#the values to be stored entered by the user
+array2: .word 1 2 3 4 5#the values for the second array
 
 .text
 la x10,array1#loading the base address in x10
 la x11,array2#loading into the address of x11
 lw x5,value1 #loading the total number of element into the register
-lw x30,value2
 
 loop1:
 lw x6,0(x10) #first position of the vector1
 lw x7,4(x10)#second position of the vector1
 blt x7,x6,swap1 #swap if x7 is less than x6
 addi x10,x10,4 #moving to the next position in the array
-addi x5,x5,-1 #reducing the number of element in the vector
+lw x28,0(x11)#first position of the array2
+lw x29,4(x11)#second position of array 2
+blt x29,x28,swap2
+addi x11,x11,4 #moving to the next position
+addi x5,x5,-1 #decrementing the counter
 bne x5,x0,loop1 #execute if x5 is not equal to zero
-jalr x1
-j second #sort second array when done with the first array
+jal final #jump to the final position
 
 swap1:
 sw x6,4(x10) #changing tbe position of the values
 sw x7,0(x10)
 j loop1
 
-second:
-lw x28,0(x11)#first position of the array2
-lw x29,4(x11)#second position of array 2
-blt x29,x28,swap2
-addi x11,x11,4 #moving to the next position
-addi x30,x30,-1 #decrementing the counter
-bne x30,x0,second
-j final
-
 swap2:
 sw x28,4(x11)
 sw x29,0(x11)
-j second
+j loop1
 
 #comparing the array if they are equal
 final:
-li x30,4
+lw x5,value1
 bne x6,x28,count
 addi x31,x31,1
 addi x10,x10,4
 addi x11,x11,4
-addi x30,x30,-1
-beq x30,x0,end
+addi x5,x5,-1
+beq x5,x0,end
 
 count:
 li x31,0
